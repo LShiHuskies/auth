@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
+import firebase from 'firebse';
 import { Button, Card, CardSection, Input } from './common';
 
 class LoginForm extends Component {
   state = {
-    text: '',
+    email: '',
+    password: '',
+  }
+
+  onButtonPress = () => {
+    const { email, password } = this.state;
+
+    firebase.auth().signInWithEmailAndPassword(email, password);
   }
   render() {
     return (
       <Card>
         <CardSection>
           <Input
-            value={this.state.text}
-            onChangeText={text => this.setState({ text })}
+            label="Email"
+            placeholder="user@gmail.com"
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
             style={{ height: 20, width: 100 }}
           />
         </CardSection>
           
-        <CardSection />
+        <CardSection>
+          <Input
+            secureTextEntry
+            placeholder="password"
+            label="Password"
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+          />
+        </CardSection>
 
         <CardSection>
-          <Button>
+          <Button onPress={this.onButtonPress}>
             Log In
           </Button>
         </CardSection>
